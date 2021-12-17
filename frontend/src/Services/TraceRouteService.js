@@ -2,18 +2,18 @@ import axios from "axios";
 
 const base_url = "https://localhost:5001/api/traceroute";
 
-const getTraceRoute = async (hostname) => {
+const getTraceRoutes = async () => {
   const result = await axios.get(`${base_url}/`);
   return result.data;
 };
-
-const postTraceRoute = async (hostname, numIterations) => {
-  const obj = {
-    hostname: hostname,
-    numIterations: numIterations,
-  };
-  const result = await axios.post(`${base_url}`);
+const getTraceRouteCollection = async (collectionID) => {
+  const result = await axios.get(`${base_url}/${collectionID}`);
   return result.data;
 };
 
-export default { getTraceRoute, postTraceRoute };
+const postTraceRoute = async (obj) => {
+  const result = await axios.post(`${base_url}`, obj);
+  return result.data;
+};
+
+export default { getTraceRoutes, postTraceRoute };
