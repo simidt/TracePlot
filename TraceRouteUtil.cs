@@ -60,7 +60,7 @@ namespace TracePlot
         {
             Ping p = new();
 
-            const int timeout = 12000;
+            const int timeout = 1000;
             const string data = "";
             byte[] buffer = Encoding.ASCII.GetBytes(data);
             Stopwatch pingReplyTime = new();
