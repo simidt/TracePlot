@@ -17,16 +17,31 @@ namespace TracePlot.Data
         public double AverageReplyTime { get; set; }
         public long MinimumReplyTime { get; set; }
         public long MaximumReplyTime { get; set; }
-
+        public double LowerQuartile { get; set; }
+        public double HigherQuartile { get; set; }
         public Guid ParentID { get; set; }
 
         public Hop()
         {
-
             MedianReplyTime = 0;
             AverageReplyTime = 0;
             MinimumReplyTime = 0;
             MaximumReplyTime = 0;
+            LowerQuartile = 0;
+            HigherQuartile = 0;
+        }
+
+        private double CalculateQuartile(int n, float p)
+        {
+            float np = n * p;
+            if (Math.Abs(np % 1) <= Double.Epsilon)
+            {
+                return (ReplyTimes[(int)np].Time + ReplyTimes[(int)np + 1].Time) / 2;
+            }
+            else
+            {
+                return ReplyTimes[(int)np + 1].Time;
+            }
         }
         public void AddAndUpdateStatistics(long replyTime)
         {
@@ -50,6 +65,13 @@ namespace TracePlot.Data
                 MedianReplyTime = ReplyTimes[(int)Math.Ceiling((double)replyTimesCount / 2)].Time;
             }
             AverageReplyTime += (replyTime - AverageReplyTime) / (double)replyTimesCount;
+
+            //Need 4 values for calculating quartiles
+            if (replyTimesCount >= 4)
+            {
+                LowerQuartile = CalculateQuartile(replyTimesCount - 1, 0.25f);
+                HigherQuartile = CalculateQuartile(replyTimesCount - 1, 0.75f);
+            }
         }
     }
 }
