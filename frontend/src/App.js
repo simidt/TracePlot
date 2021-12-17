@@ -9,6 +9,7 @@ function App() {
   const [numberOfIterations, setNumberOfIterations] = useState("");
   const [intervalSize, setIntervalSize] = useState("");
   const [traceRoutes, setTraceRoutes] = useState([]);
+
   useEffect(() => {
     TraceRouteService.getTraceRoutes().then((response) => {
       setTraceRoutes(response);
@@ -35,33 +36,32 @@ function App() {
           ></input>
           <input
             className=" p-2 mt-4 w-full"
-            type="text"
-            onChange={(e) => setNumberOfIterations(e.target.value)}
+            onChange={(e) =>
+              setNumberOfIterations(e.target.value.replace(/\D/, ""))
+            }
             value={numberOfIterations}
             placeholder="Number of iterations"
           ></input>
           <input
             className=" p-2 mt-4 w-full"
-            type="text"
-            onChange={(e) => setIntervalSize(e.target.value)}
+            onChange={(e) => setIntervalSize(e.target.value.replace(/\D/, ""))}
             value={intervalSize}
             placeholder="Interval size (ms)"
           ></input>
         </div>
-        <button className="m-4">TraceRoute</button>
+        <button className="h-1/2 m-6 mt-32 bg-blue-400" type="submit">
+          Start Traceroute
+        </button>
       </form>
-      <div className="">
-        <span>Target Domain</span>
-        <span>Number of Iterations</span>
-
-        <div>
-          <div>
-            {traceRoutes.map((entry) => (
-              <TraceRouteCollection entry={entry}></TraceRouteCollection>
-            ))}
-          </div>
-        </div>
+      <h1>Completed Traceroutes</h1>
+      <div className="flex flex-row w-1/2">
+        <span className="mr-6">Target Domain</span>
+        <span className="mr-6">Number of Iterations</span>
       </div>
+
+      {traceRoutes.map((entry) => (
+        <TraceRouteCollection entry={entry}></TraceRouteCollection>
+      ))}
     </div>
   );
 }

@@ -8,8 +8,8 @@ const BoxPlot = (props) =>{
         const newData = props.hops.reduce((result, hop) => {
             // Filter out hops that did not respond
             if(hop.address !== "N/A"){
-                result.push({x:[hop.minimumReplyTime, hop.lowerQuartile, hop.medianReplyTime, hop.higherQuartile, hop.maximumReplyTime],
-                    y: "ms",
+                result.push({y:[hop.minimumReplyTime, hop.lowerQuartile, hop.medianReplyTime, hop.higherQuartile, hop.maximumReplyTime],
+                    x: "ms",
                     type:"box",
                     name:hop.address
                 })

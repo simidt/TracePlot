@@ -9,15 +9,19 @@ const TraceRouteCollection = (props) => {
         // const hops = await TraceRouteService.getTraceRouteCollection(props.entry["traceRouteCollectionID"])
         setExpanded(!expanded)
         }
-    return (
-        <div key={props.entry["targetHostname"]}>
-              <span>{props.entry["targetHostname"]}</span>
-              <span>{props.entry["numberOfLoops"]}</span>
-              <button onClick={() => expand()}>{expanded ? "Hide details":"View details"}</button>
+    return (<>
+            <div className="flex flex-row w-1/2">
+              <span className="mr-6">{props.entry["targetHostname"]}</span>
+              <span className="mr-64">{props.entry["numberOfLoops"]}</span>
+            <button className="grow-0 mr-4" onClick={() => expand()}>{expanded ? "Hide details":"View details"}</button>
+            </div>
+              
             <div>
                 {expanded ? <BoxPlot hops={props.entry["hops"]}></BoxPlot>: <></>}
             </div>
-            </div>
+            
+
+            </>
             
 
     )

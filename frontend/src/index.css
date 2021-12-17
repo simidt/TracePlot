@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    h1 {
+      @apply text-2xl;
+      @apply leading-6;
+    }
+    h2 {
+      @apply text-2xl;
+      @apply leading-loose;
+      @apply font-bold;
+      @apply mt-4;
+      @apply mb-2;
+    }
+    button {
+    @apply rounded-sm;
+    @apply bg-blue-400;
+    @apply border-0;
+    @apply shadow-md;
+    @apply p-2;
+    @apply disabled:opacity-50;
+    }
+    
+  }
