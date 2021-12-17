@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TracePlot.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,10 +16,7 @@ namespace TracePlot.Migrations
                     Start = table.Column<DateTime>(type: "TEXT", nullable: false),
                     NumberOfLoops = table.Column<int>(type: "INTEGER", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TraceRouteCollections", x => x.TraceRouteCollectionID);
-                });
+                constraints: table => table.PrimaryKey("PK_TraceRouteCollections", x => x.TraceRouteCollectionID));
 
             migrationBuilder.CreateTable(
                 name: "Hops",
@@ -32,6 +29,8 @@ namespace TracePlot.Migrations
                     AverageReplyTime = table.Column<double>(type: "REAL", nullable: false),
                     MinimumReplyTime = table.Column<long>(type: "INTEGER", nullable: false),
                     MaximumReplyTime = table.Column<long>(type: "INTEGER", nullable: false),
+                    LowerQuartile = table.Column<double>(type: "REAL", nullable: false),
+                    HigherQuartile = table.Column<double>(type: "REAL", nullable: false),
                     ParentID = table.Column<Guid>(type: "TEXT", nullable: false),
                     TraceRouteCollectionID = table.Column<Guid>(type: "TEXT", nullable: true)
                 },

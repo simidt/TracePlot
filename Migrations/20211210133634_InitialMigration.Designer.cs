@@ -9,8 +9,8 @@ using TracePlot.Data;
 namespace TracePlot.Migrations
 {
     [DbContext(typeof(TraceRouteDbContext))]
-    [Migration("20211110121508_Initial")]
-    partial class Initial
+    [Migration("20211210133634_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,7 +18,7 @@ namespace TracePlot.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.11");
 
-            modelBuilder.Entity("PingPlotter.Data.Hop", b =>
+            modelBuilder.Entity("TracePlot.Data.Hop", b =>
                 {
                     b.Property<Guid>("HopId")
                         .ValueGeneratedOnAdd()
@@ -30,8 +30,14 @@ namespace TracePlot.Migrations
                     b.Property<double>("AverageReplyTime")
                         .HasColumnType("REAL");
 
+                    b.Property<double>("HigherQuartile")
+                        .HasColumnType("REAL");
+
                     b.Property<int>("HopNumber")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("LowerQuartile")
+                        .HasColumnType("REAL");
 
                     b.Property<long>("MaximumReplyTime")
                         .HasColumnType("INTEGER");
@@ -55,7 +61,7 @@ namespace TracePlot.Migrations
                     b.ToTable("Hops");
                 });
 
-            modelBuilder.Entity("PingPlotter.Data.TraceRouteCollection", b =>
+            modelBuilder.Entity("TracePlot.Data.TraceRouteCollection", b =>
                 {
                     b.Property<Guid>("TraceRouteCollectionID")
                         .ValueGeneratedOnAdd()
@@ -75,7 +81,7 @@ namespace TracePlot.Migrations
                     b.ToTable("TraceRouteCollections");
                 });
 
-            modelBuilder.Entity("PingPlotter.Models.ReplyTime", b =>
+            modelBuilder.Entity("TracePlot.Models.ReplyTime", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -94,28 +100,28 @@ namespace TracePlot.Migrations
                     b.ToTable("ReplyTimes");
                 });
 
-            modelBuilder.Entity("PingPlotter.Data.Hop", b =>
+            modelBuilder.Entity("TracePlot.Data.Hop", b =>
                 {
-                    b.HasOne("PingPlotter.Data.TraceRouteCollection", null)
+                    b.HasOne("TracePlot.Data.TraceRouteCollection", null)
                         .WithMany("Hops")
                         .HasForeignKey("TraceRouteCollectionID");
                 });
 
-            modelBuilder.Entity("PingPlotter.Models.ReplyTime", b =>
+            modelBuilder.Entity("TracePlot.Models.ReplyTime", b =>
                 {
-                    b.HasOne("PingPlotter.Data.Hop", null)
+                    b.HasOne("TracePlot.Data.Hop", null)
                         .WithMany("ReplyTimes")
                         .HasForeignKey("HopID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PingPlotter.Data.Hop", b =>
+            modelBuilder.Entity("TracePlot.Data.Hop", b =>
                 {
                     b.Navigation("ReplyTimes");
                 });
 
-            modelBuilder.Entity("PingPlotter.Data.TraceRouteCollection", b =>
+            modelBuilder.Entity("TracePlot.Data.TraceRouteCollection", b =>
                 {
                     b.Navigation("Hops");
                 });

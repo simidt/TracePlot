@@ -29,5 +29,4 @@ namespace TracePlot.Data
 
         public List<Hop> Hops { get; set; }
     }
-
 }

@@ -5,7 +5,7 @@ using TracePlot.Data;
 namespace TracePlot.Models
 {
     public class ReplyTime : IComparable<ReplyTime>
-    {   
+    {
         [Key]
         public Guid ID { get; set; }
         public long Time { get; set; }
