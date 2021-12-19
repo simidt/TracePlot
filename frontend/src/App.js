@@ -18,7 +18,11 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newObj = { hostname, numberOfIterations, intervalSize };
+    const newObj = {
+      Hostname,
+      NumberOfIterations: parseInt(numberOfIterations, 10),
+      IntervalSize: parseInt(intervalSize, 10),
+    };
     const traceRoute = await TraceRouteService.getTraceRoute(newObj);
     setTraceRouteEntries(traceRoute);
   };
@@ -55,8 +59,8 @@ function App() {
       </form>
       <h1>Completed Traceroutes</h1>
       <div className="flex flex-row w-1/2">
-        <span className="mr-6">Target Domain</span>
-        <span className="mr-6">Number of Iterations</span>
+        <span className="mr-6 w-1/5">Target Domain</span>
+        <span className=" w-1/5">Number of Iterations</span>
       </div>
 
       {traceRoutes.map((entry) => (
