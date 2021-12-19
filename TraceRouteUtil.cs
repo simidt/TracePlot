@@ -10,14 +10,17 @@ using System;
 using System.Collections;
 using TracePlot.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace TracePlot
 {
     public static class TraceRouteUtil
     {
-        public static void TraceRouteStatistics(string Hostname, int NumIterations, TraceRouteDbContext context)
+        public static async Task TraceRouteStatistics(TraceRouteConfig config, TraceRouteDbContext context)
         {
-            Console.WriteLine(string.Format("Starting traceroute to {0} for {1} iterations", Hostname, NumIterations));
+            string Hostname = config.Hostname;
+            int NumIterations = config.NumberOfIterations;
+            int IntervalSize = config.IntervalSize;
             TraceRouteCollection trc = new()
             {
                 TargetHostname = Hostname,
@@ -52,6 +55,7 @@ namespace TracePlot
                         context.ReplyTimes.AddRange(h.ReplyTimes);
                     }
                 }
+                await Task.Delay(IntervalSize);
             }
             context.Hops.AddRange(trc.Hops);
             context.SaveChanges();

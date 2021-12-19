@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using TracePlot.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using TracePlot.Models;
 
 namespace TracePlot.Controllers
 {
@@ -28,14 +29,13 @@ namespace TracePlot.Controllers
         {
             return _context.TraceRouteCollections.Include(trc => trc.Hops).ToList();
         }
-        [HttpPost("{hostname}")]
-        public StatusCodeResult StartTraceRoute(string hostname)
+        [HttpPost]
+        public async Task<IActionResult> StartTraceRoute([FromBody] TraceRouteConfig config)
         {
-
             //TODO: Queue these requests and schedule them for a later time; return status 200 if the queuing is done
-            TracePlot.TraceRouteUtil.TraceRouteStatistics(hostname, 100, _context);
+            await Task.Run(() => TracePlot.TraceRouteUtil.TraceRouteStatistics(config, _context));
             return StatusCode(StatusCodes.Status200OK);
-
         }
+
     }
 }
