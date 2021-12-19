@@ -30,6 +30,9 @@ const BoxPlot = (props) =>{
             type: 'category',
             title: 'Hops',
         },
+        yaxis:{
+            title: "Reply time (ms)"
+        }
     }
     return ( 
         
