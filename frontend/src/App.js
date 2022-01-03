@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import TraceRouteCollection from "./Components/TraceRouteCollection";
 
 function App() {
-  const [traceRouteEntries, setTraceRouteEntries] = useState([]);
   const [hostname, setHostname] = useState("");
   const [numberOfIterations, setNumberOfIterations] = useState("");
   const [intervalSize, setIntervalSize] = useState("");
@@ -28,7 +27,7 @@ function App() {
   };
   //const handleExpand = async();
   return (
-    <div className="h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gray-100 p-8">
       <form onSubmit={handleSubmit} className="flex">
         <div className="w-1/5  flex-col justify-center ">
           <input
@@ -64,7 +63,10 @@ function App() {
       </div>
 
       {traceRoutes.map((entry) => (
-        <TraceRouteCollection entry={entry}></TraceRouteCollection>
+        <TraceRouteCollection
+          key={entry["traceRouteCollectionID"]}
+          entry={entry}
+        ></TraceRouteCollection>
       ))}
     </div>
   );
