@@ -1,8 +1,6 @@
 
-
 namespace TracePlot.Models
 {
-
     public class TraceRouteConfig
     {
         public string Hostname { get; set; }
@@ -10,7 +8,5 @@ namespace TracePlot.Models
         public int NumberOfIterations { get; set; }
 
         public int IntervalSize { get; set; }
-
-
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Quartz;
 using TracePlot.Data;
 
 namespace TracePlot
@@ -26,6 +27,16 @@ namespace TracePlot
             services.AddDbContext<TraceRouteDbContext>(options => options.UseSqlite("Data Source=traceroutes2.db"));
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "frontend/build");
+
+            //Taken from the ASP.NET Core integration part of the Quartz documentation (https://www.quartz-scheduler.net/documentation/quartz-3.x/packages/aspnet-core-integration.html)
+            services.AddQuartz(q =>
+            {
+                q.UseMicrosoftDependencyInjectionJobFactory();
+                var jobKey = new JobKey("TraceRouteJob");
+            });
+
+            services.AddQuartzHostedService(
+                    q => q.WaitForJobsToComplete = true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
