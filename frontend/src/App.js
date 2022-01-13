@@ -18,14 +18,12 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newObj = {
-      Hostname,
-      NumberOfIterations: parseInt(numberOfIterations, 10),
-      IntervalSize: parseInt(intervalSize, 10),
+      hostname,
+      numberOfIterations: parseInt(numberOfIterations, 10),
+      intervalSize: parseInt(intervalSize, 10),
     };
-    const traceRoute = await TraceRouteService.getTraceRoute(newObj);
-    setTraceRouteEntries(traceRoute);
+    const traceRoute = await TraceRouteService.postTraceRoute(newObj);
   };
-  //const handleExpand = async();
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <form onSubmit={handleSubmit} className="flex">
@@ -60,6 +58,7 @@ function App() {
       <div className="flex flex-row w-1/2">
         <span className="mr-6 w-1/5">Target Domain</span>
         <span className=" w-1/5">Number of Iterations</span>
+        <span className=" w-1/5">Interval Size (ms)</span>
       </div>
 
       {traceRoutes.map((entry) => (
