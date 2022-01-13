@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TracePlot.Data;
 
 namespace TracePlot.Migrations
 {
     [DbContext(typeof(TraceRouteDbContext))]
-    partial class TraceRouteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220112023204_AddIntervalSize")]
+    partial class AddIntervalSize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
