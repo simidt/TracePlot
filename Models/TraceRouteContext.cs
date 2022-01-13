@@ -27,6 +27,7 @@ namespace TracePlot.Data
         public DateTime Start { get; set; }
         public int NumberOfLoops { get; set; }
 
+        public int IntervalSize { get; set;}
         public List<Hop> Hops { get; set; }
     }
 }

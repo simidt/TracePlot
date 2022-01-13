@@ -13,6 +13,7 @@ const TraceRouteCollection = (props) => {
             <div className="flex flex-row w-1/2 mt-6">
               <span className="mr-6 w-1/5">{props.entry["targetHostname"]}</span>
               <span className="mr-6 w-1/5">{props.entry["numberOfLoops"]}</span>
+              <span className="mr-6 w-1/5">{props.entry["intervalSize"]}</span>
             <button className="grow-0 mr-4 w-1/5" onClick={() => expand()}>{expanded ? "Hide details":"View details"}</button>
             </div>
               

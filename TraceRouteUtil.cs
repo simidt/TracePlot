@@ -27,7 +27,8 @@ namespace TracePlot
                 NumberOfLoops = NumIterations,
                 Start = DateTime.UtcNow,
                 TraceRouteCollectionID = Guid.NewGuid(),
-                Hops = new List<Hop>()
+                Hops = new List<Hop>(),
+                IntervalSize = IntervalSize
             };
             Dictionary<string, Hop> Hops = new();
             context.TraceRouteCollections.Add(trc);
