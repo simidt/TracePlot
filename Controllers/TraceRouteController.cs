@@ -1,5 +1,4 @@
 using System;
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -36,16 +35,35 @@ namespace TracePlot.Controllers
         [HttpPost]
         public async Task<IActionResult> StartTraceRoute([FromBody] TraceRouteConfig config)
         {
-            IScheduler scheduler = await _factory.GetScheduler();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(config.Hostname))
+                {
+                    return new JsonResult(new { StatusCodes.Status400BadRequest, Response = "Please specify a valid hostname." });
+                }
+                if (config.NumberOfIterations == 0)
+                {
+                    return new JsonResult(new { StatusCodes.Status400BadRequest, Response = "Please specify the number of iterations." });
+                }
+                IScheduler scheduler = await _factory.GetScheduler();
 
-            IJobDetail job = JobBuilder.Create<TraceRouteJob>().Build();
-            job.JobDataMap.Add("Config", config);
+                IJobDetail job = JobBuilder.Create<TraceRouteJob>().Build();
+                job.JobDataMap.Add("Config", config);
 
-            ISimpleTrigger trigger = (ISimpleTrigger)TriggerBuilder.Create().Build();
+                ISimpleTrigger trigger = (ISimpleTrigger)TriggerBuilder.Create().Build();
 
-            await scheduler.ScheduleJob(job, trigger);
+                await scheduler.ScheduleJob(job, trigger);
 
-            return StatusCode(StatusCodes.Status200OK);
+                return new JsonResult(new
+                {
+                    StatusCodes.Status200OK,
+                    Response = $"Successfully queued a traceroute to {config.Hostname} for {config.NumberOfIterations} iterations with an interval of {config.IntervalSize}ms."
+                });
+            }
+            catch (Exception e)
+            {
+                return new JsonResult(new { StatusCodes.Status500InternalServerError, Response = "Traceroute process failed" });
+            }
         }
     }
 }
