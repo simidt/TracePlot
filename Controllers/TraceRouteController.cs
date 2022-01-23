@@ -36,7 +36,17 @@ namespace TracePlot.Controllers
         [HttpPost]
         public async Task<IActionResult> StartTraceRoute([FromBody] TraceRouteConfig config)
         {
-            IScheduler scheduler = await _factory.GetScheduler();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(config.Hostname))
+                {
+                    return BadRequest(error: new { Response = "Please specify a valid hostname." });
+                }
+                if (config.NumberOfIterations == 0)
+                {
+                    return BadRequest(error: new { Response = "Please specify the number of iterations." });
+                }
+                IScheduler scheduler = await _factory.GetScheduler();
 
             IJobDetail job = JobBuilder.Create<TraceRouteJob>().Build();
             job.JobDataMap.Add("Config", config);
@@ -45,7 +55,15 @@ namespace TracePlot.Controllers
 
             await scheduler.ScheduleJob(job, trigger);
 
-            return StatusCode(StatusCodes.Status200OK);
+                return Ok(value: new
+                {
+                    Response = $"Successfully queued a traceroute to {config.Hostname} for {config.NumberOfIterations} iterations with an interval of {config.IntervalSize}ms."
+                });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, value: "Traceroute process failed");
+            }
         }
     }
 }

@@ -12,8 +12,12 @@ const getTraceRouteCollection = async (collectionID) => {
 };
 
 const postTraceRoute = async (obj) => {
-  const result = await axios.post(`${base_url}`, obj);
-  return result.data;
+  try {
+    const result = await axios.post(`${base_url}`, obj);
+    return result;
+  } catch (err) {
+    return err.response;
+  }
 };
 
 export default { getTraceRoutes, postTraceRoute };
