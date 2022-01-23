@@ -2,14 +2,12 @@ import "./App.css";
 import TraceRouteService from "./Services/TraceRouteService";
 import React, { useState, useEffect } from "react";
 import TraceRouteCollection from "./Components/TraceRouteCollection";
-import MessageDisplay from "./Components/MessageDisplay";
 
 function App() {
   const [hostname, setHostname] = useState("");
   const [numberOfIterations, setNumberOfIterations] = useState("");
   const [intervalSize, setIntervalSize] = useState("");
   const [traceRoutes, setTraceRoutes] = useState([]);
-  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     TraceRouteService.getTraceRoutes().then((response) => {
@@ -24,6 +22,7 @@ function App() {
       numberOfIterations: parseInt(numberOfIterations, 10),
       intervalSize: parseInt(intervalSize, 10),
     };
+
     const response = await TraceRouteService.postTraceRoute(newObj);
     if (response.status === 200) {
       setMessage({
@@ -39,6 +38,7 @@ function App() {
     }
     //Only show the confirmation for 5 seconds
     setTimeout(() => setMessage(null), 5000);
+
   };
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -70,7 +70,6 @@ function App() {
           Start Traceroute
         </button>
       </form>
-      <MessageDisplay message={message}></MessageDisplay>
       <h1>Completed Traceroutes</h1>
       <div className="flex flex-row w-1/2">
         <span className="mr-6 w-1/5">Target Domain</span>

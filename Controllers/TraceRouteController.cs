@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -47,12 +48,12 @@ namespace TracePlot.Controllers
                 }
                 IScheduler scheduler = await _factory.GetScheduler();
 
-                IJobDetail job = JobBuilder.Create<TraceRouteJob>().Build();
-                job.JobDataMap.Add("Config", config);
+            IJobDetail job = JobBuilder.Create<TraceRouteJob>().Build();
+            job.JobDataMap.Add("Config", config);
 
-                ISimpleTrigger trigger = (ISimpleTrigger)TriggerBuilder.Create().Build();
+            ISimpleTrigger trigger = (ISimpleTrigger)TriggerBuilder.Create().Build();
 
-                await scheduler.ScheduleJob(job, trigger);
+            await scheduler.ScheduleJob(job, trigger);
 
                 return Ok(value: new
                 {
