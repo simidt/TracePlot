@@ -16,7 +16,7 @@ const postTraceRoute = async (obj) => {
     const result = await axios.post(`${base_url}`, obj);
     return result;
   } catch (err) {
-    return err;
+    return err.response;
   }
 };
 
