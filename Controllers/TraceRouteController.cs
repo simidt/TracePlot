@@ -39,11 +39,11 @@ namespace TracePlot.Controllers
             {
                 if (string.IsNullOrWhiteSpace(config.Hostname))
                 {
-                    return new JsonResult(new { StatusCodes.Status400BadRequest, Response = "Please specify a valid hostname." });
+                    return BadRequest(error: new { Response = "Please specify a valid hostname." });
                 }
                 if (config.NumberOfIterations == 0)
                 {
-                    return new JsonResult(new { StatusCodes.Status400BadRequest, Response = "Please specify the number of iterations." });
+                    return BadRequest(error: new { Response = "Please specify the number of iterations." });
                 }
                 IScheduler scheduler = await _factory.GetScheduler();
 
@@ -54,15 +54,14 @@ namespace TracePlot.Controllers
 
                 await scheduler.ScheduleJob(job, trigger);
 
-                return new JsonResult(new
+                return Ok(value: new
                 {
-                    StatusCodes.Status200OK,
                     Response = $"Successfully queued a traceroute to {config.Hostname} for {config.NumberOfIterations} iterations with an interval of {config.IntervalSize}ms."
                 });
             }
             catch (Exception e)
             {
-                return new JsonResult(new { StatusCodes.Status500InternalServerError, Response = "Traceroute process failed" });
+                return StatusCode(StatusCodes.Status500InternalServerError, value: "Traceroute process failed");
             }
         }
     }

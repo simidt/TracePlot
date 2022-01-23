@@ -8,7 +8,6 @@ namespace TracePlot.Models
 {
     public class TraceRouteConfig
     {
-        [Required]
         public string Hostname { get; set; }
 
         [JsonConverter(typeof(EmptyStringJsonConverter))]
