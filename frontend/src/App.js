@@ -6,8 +6,8 @@ import MessageDisplay from "./Components/MessageDisplay";
 
 function App() {
   const [hostname, setHostname] = useState("");
-  const [numberOfIterations, setNumberOfIterations] = useState(0);
-  const [intervalSize, setIntervalSize] = useState(0);
+  const [numberOfIterations, setNumberOfIterations] = useState("");
+  const [intervalSize, setIntervalSize] = useState("");
   const [traceRoutes, setTraceRoutes] = useState([]);
   const [message, setMessage] = useState(null);
 
@@ -24,17 +24,16 @@ function App() {
       numberOfIterations: parseInt(numberOfIterations, 10),
       intervalSize: parseInt(intervalSize, 10),
     };
-    const responseStatus = await TraceRouteService.postTraceRoute(newObj);
-
-    if (responseStatus === 200) {
+    const response = await TraceRouteService.postTraceRoute(newObj);
+    if (response.status === 200) {
       setMessage({
-        text: responseStatus.response,
+        text: response.data.response,
         isError: false,
       });
       //If the statuscode is not 200, an error has occurred in the backend
     } else {
       setMessage({
-        text: responseStatus.response,
+        text: response.data.response,
         isError: true,
       });
     }
