@@ -22,23 +22,7 @@ function App() {
       numberOfIterations: parseInt(numberOfIterations, 10),
       intervalSize: parseInt(intervalSize, 10),
     };
-
-    const response = await TraceRouteService.postTraceRoute(newObj);
-    if (response.status === 200) {
-      setMessage({
-        text: response.data.response,
-        isError: false,
-      });
-      //If the statuscode is not 200, an error has occurred in the backend
-    } else {
-      setMessage({
-        text: response.data.response,
-        isError: true,
-      });
-    }
-    //Only show the confirmation for 5 seconds
-    setTimeout(() => setMessage(null), 5000);
-
+    const traceRoute = await TraceRouteService.postTraceRoute(newObj);
   };
   return (
     <div className="min-h-screen bg-gray-100 p-8">
