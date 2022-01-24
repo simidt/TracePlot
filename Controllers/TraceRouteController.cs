@@ -59,7 +59,7 @@ namespace TracePlot.Controllers
                     Response = $"Successfully queued a traceroute to {config.Hostname} for {config.NumberOfIterations} iterations with an interval of {config.IntervalSize}ms."
                 });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, value: "Traceroute process failed");
             }
