@@ -76,6 +76,16 @@ function App() {
         <span className="mr-6 w-1/5">Target Domain</span>
         <span className=" w-1/5">Number of Iterations</span>
         <span className=" w-1/5">Interval Size (ms)</span>
+        <button
+          className="w-1/5"
+          onClick={() =>
+            TraceRouteService.getTraceRoutes().then((response) =>
+              setTraceRoutes(response)
+            )
+          }
+        >
+          Refresh
+        </button>
       </div>
 
       {traceRoutes.map((entry) => (
