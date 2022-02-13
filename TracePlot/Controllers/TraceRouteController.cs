@@ -19,13 +19,11 @@ namespace TracePlot.Controllers
     {
         private readonly ISchedulerFactory _factory;
         private readonly TraceRouteDbContext _context;
-        private readonly ILogger<TraceRouteController> _logger;
 
-        public TraceRouteController(TraceRouteDbContext context, ILogger<TraceRouteController> logger, ISchedulerFactory factory)
+        public TraceRouteController(TraceRouteDbContext context, ISchedulerFactory factory)
         {
             _factory = factory;
             _context = context;
-            _logger = logger;
         }
         [HttpGet]
         public IEnumerable<TraceRouteCollection> GetTraceRoute()
@@ -45,6 +43,7 @@ namespace TracePlot.Controllers
                 {
                     return BadRequest(error: new { Response = "Please specify the number of iterations." });
                 }
+
                 IScheduler scheduler = await _factory.GetScheduler();
 
                 IJobDetail job = JobBuilder.Create<TraceRouteJob>().Build();

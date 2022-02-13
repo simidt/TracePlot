@@ -18,7 +18,6 @@ namespace TracePlot.Jobs
         {
             JobDataMap dataMap = context.JobDetail.JobDataMap;
             TraceRouteConfig config = (TraceRouteConfig)dataMap["Config"];
-            Console.WriteLine("Starting job with target " + config.Hostname + " for " + config.NumberOfIterations + " iterations and an interval size of " + config.IntervalSize);
 
             await Task.Run(() => TraceRouteUtil.TraceRouteStatistics(config, _context));
         }

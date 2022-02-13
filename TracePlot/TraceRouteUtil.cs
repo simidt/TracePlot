@@ -21,6 +21,7 @@ namespace TracePlot
             string Hostname = config.Hostname;
             int NumIterations = config.NumberOfIterations;
             int IntervalSize = config.IntervalSize;
+
             TraceRouteCollection trc = new()
             {
                 TargetHostname = Hostname,
@@ -30,8 +31,10 @@ namespace TracePlot
                 Hops = new List<Hop>(),
                 IntervalSize = IntervalSize
             };
+
             Dictionary<string, Hop> Hops = new();
             context.TraceRouteCollections.Add(trc);
+
             for (int i = 0; i < NumIterations; i++)
             {
                 foreach (TraceRouteEntry tre in TraceRoute(Hostname))
@@ -58,9 +61,11 @@ namespace TracePlot
                 }
                 await Task.Delay(IntervalSize);
             }
+
             context.Hops.AddRange(trc.Hops);
             context.SaveChanges();
         }
+
         private static IEnumerable<TraceRouteEntry> TraceRoute(string Hostname)
         {
             Ping p = new();

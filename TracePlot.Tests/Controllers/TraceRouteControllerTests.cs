@@ -19,7 +19,7 @@ namespace TracePlot.Tests
         {
             TraceRouteConfig trc = new();
 
-            var controller = new TraceRouteController(context: null, logger: null, factory: null);
+            var controller = new TraceRouteController(context: null, factory: null);
             var result = await controller.StartTraceRoute(trc);
 
             var badRequestActionResult = Assert.IsType<BadRequestObjectResult>(result);
@@ -35,7 +35,7 @@ namespace TracePlot.Tests
             TraceRouteConfig trc = new();
             trc.Hostname = "www.test.com";
 
-            var controller = new TraceRouteController(context: null, logger: null, factory: null);
+            var controller = new TraceRouteController(context: null, factory: null);
             var result = await controller.StartTraceRoute(trc);
 
             var badRequestActionResult = Assert.IsType<BadRequestObjectResult>(result);
@@ -48,7 +48,6 @@ namespace TracePlot.Tests
         [Fact]
         public async Task OkOnCorrectInputData()
         {
-
             TraceRouteConfig trc = new();
             trc.Hostname = "www.microsoft.com";
             trc.NumberOfIterations = 5;
@@ -58,7 +57,7 @@ namespace TracePlot.Tests
 
             ISchedulerFactory factory = new StdSchedulerFactory();
             using var context = new TraceRouteDbContext(options);
-            var controller = new TraceRouteController(context: context, logger: null, factory: factory);
+            var controller = new TraceRouteController(context: context, factory: factory);
             var result = await controller.StartTraceRoute(trc);
 
             var OkActionResult = Assert.IsType<OkObjectResult>(result);
