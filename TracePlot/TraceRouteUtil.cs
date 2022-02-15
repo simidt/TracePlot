@@ -14,8 +14,17 @@ using System.Threading.Tasks;
 
 namespace TracePlot
 {
+    /// <summary>
+    /// Class <c>TraceRouteUtil</c> provides utility functions for performing traceroutes.
+    /// </summary>
     public static class TraceRouteUtil
     {
+        /// <summary>
+        /// Starts a tracerouting process with the given parameters.
+        /// </summary>
+        /// <param name="config">The <c>TraceRouteConfig</c> containing the configuration parameters for the traceroute.</param>
+        /// <param name="context">The <c>TraceRouteDbContext</c> used to store the results.</param>
+        /// <returns></returns>
         public static async Task TraceRouteStatistics(TraceRouteConfig config, TraceRouteDbContext context)
         {
             string Hostname = config.Hostname;
@@ -66,6 +75,11 @@ namespace TracePlot
             context.SaveChanges();
         }
 
+        /// <summary>
+        /// Performs a traceroute to a given host.
+        /// </summary>
+        /// <param name="Hostname">The target host.</param>
+        /// <returns></returns>
         private static IEnumerable<TraceRouteEntry> TraceRoute(string Hostname)
         {
             Ping p = new();

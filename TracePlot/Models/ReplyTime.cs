@@ -4,6 +4,9 @@ using TracePlot.Data;
 
 namespace TracePlot.Models
 {
+    /// <summary>
+    /// Class <c>ReplyTime</c> contains the time to reply for a single ICMP request.
+    /// </summary>
     public class ReplyTime : IComparable<ReplyTime>
     {
         [Key]

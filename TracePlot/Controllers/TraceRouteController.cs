@@ -25,11 +25,20 @@ namespace TracePlot.Controllers
             _factory = factory;
             _context = context;
         }
+        /// <summary>
+        /// Handles GET requests to the traceroute endpoint.
+        /// </summary>
+        /// <returns>All <c>TraceRouteCollections</c> including their respective hops and statistics.</returns>
         [HttpGet]
-        public IEnumerable<TraceRouteCollection> GetTraceRoute()
+        public IEnumerable<TraceRouteCollection> GetTraceRoutes()
         {
             return _context.TraceRouteCollections.Include(trc => trc.Hops).ToList();
         }
+        /// <summary>
+        /// Handles POST requests to the traceroute endpoint and starts a new traceroute on receiving a non-malformed request.
+        /// </summary>
+        /// <param name="config">A <c>TraceRouteConfig</c> instance containing the hostname, number of iterations and interval size of the traceroute to be started</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> StartTraceRoute([FromBody] TraceRouteConfig config)
         {

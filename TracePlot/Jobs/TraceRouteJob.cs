@@ -6,6 +6,9 @@ using TracePlot.Models;
 
 namespace TracePlot.Jobs
 {
+    /// <summary>
+    /// Class <c>TraceRouteJob</c> describes a Quartz.NET job used to start the traceroute process with specific parameters.
+    /// </summary>
     public class TraceRouteJob : IJob
     {
         private readonly TraceRouteDbContext _context;

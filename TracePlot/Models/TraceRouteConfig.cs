@@ -6,6 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace TracePlot.Models
 {
+    /// <summary>
+    /// Class <c>TraceRouteConfig</c> describes the format of the JSON input supplied with POST requests to the traceroute endpoint.
+    /// </summary>
     public class TraceRouteConfig
     {
         public string Hostname { get; set; }
@@ -17,6 +20,10 @@ namespace TracePlot.Models
         public int IntervalSize { get; set; }
     }
 
+    /// <summary>
+    /// Class <c>EmptyStringJsonConverter</c> is used to correctly parse empty strings in the JSON input.
+    /// If an empty string is supplied the converter returns 0.
+    /// </summary>
     public class EmptyStringJsonConverter : JsonConverter<int>
     {
         public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

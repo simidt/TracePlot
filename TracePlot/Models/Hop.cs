@@ -5,6 +5,9 @@ using TracePlot.Models;
 
 namespace TracePlot.Data
 {
+    /// <summary>
+    /// Class <c>Hop</c> contains the statistics calculated for each hop in a given traceroute.
+    /// </summary>
     public class Hop
     {
         [Key]
@@ -43,9 +46,16 @@ namespace TracePlot.Data
                 return ReplyTimes[(int)np + 1].Time;
             }
         }
+
+        /// <summary>
+        /// Adds a new datapoint to the current hop, updating the statistics in the process.
+        /// </summary>
+        /// <param name="replyTime">The elapsed time until the ICMP request was answered.</param>
         public void AddAndUpdateStatistics(long replyTime)
         {
             ReplyTime newReplyTime = new(replyTime, this.HopId);
+
+            // Ensure that all entries of ReplyTimes are ordered after each insertion to reduce compute time of median and quartiles.
             int index = ReplyTimes.BinarySearch(newReplyTime);
             if (index < 0)
             {

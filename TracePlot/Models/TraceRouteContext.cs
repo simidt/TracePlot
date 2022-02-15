@@ -9,6 +9,9 @@ using TracePlot.Models;
 
 namespace TracePlot.Data
 {
+    /// <summary>
+    /// Class <c>TraceRouteDbContext</c> serves as the database context for the traceroute data.
+    /// </summary>
     public class TraceRouteDbContext : DbContext
     {
         public TraceRouteDbContext(DbContextOptions<TraceRouteDbContext> options) : base(options) { }
