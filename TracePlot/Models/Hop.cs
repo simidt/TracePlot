@@ -26,6 +26,7 @@ namespace TracePlot.Data
 
         public Hop()
         {
+            ReplyTimes = new List<ReplyTime>();
             MedianReplyTime = 0;
             AverageReplyTime = 0;
             MinimumReplyTime = 0;
