@@ -10,7 +10,7 @@ using Xunit;
 using Moq;
 using Microsoft.EntityFrameworkCore;
 
-namespace TracePlot.Tests
+namespace TracePlot.Tests.Controllers
 {
     public class TraceRouteControllerTest
     {
