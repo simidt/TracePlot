@@ -19,7 +19,7 @@ const BoxPlot = (props) =>{
         }, []);
         
         setData(newData)
-    },[])
+    },[props.hops])
 
     let layout = { 
         title: 'Traceroute',
