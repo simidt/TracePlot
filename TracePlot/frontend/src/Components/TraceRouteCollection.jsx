@@ -18,7 +18,7 @@ const TraceRouteCollection = (props) => {
             </div>
               
             <div>
-                {expanded ? <BoxPlot hops={props.entry["hops"]}></BoxPlot>: <></>}
+                {expanded ? <BoxPlot className="togglableContent" hops={props.entry["hops"]}></BoxPlot>: <></>}
             </div>
             
 
