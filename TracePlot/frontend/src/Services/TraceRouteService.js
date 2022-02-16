@@ -20,4 +20,8 @@ const postTraceRoute = async (obj) => {
   }
 };
 
-export default { getTraceRoutes, postTraceRoute };
+export default {
+  getTraceRoutes,
+  postTraceRoute,
+  getTraceRouteCollection,
+};
