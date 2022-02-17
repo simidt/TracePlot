@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const base_url = "https://localhost:5001/api/traceroute";
+// TODO: Find a better way to do this
+const base_url = `${window.location.origin}/api/traceroute`;
 
 const getTraceRoutes = async () => {
   const result = await axios.get(`${base_url}/`);
