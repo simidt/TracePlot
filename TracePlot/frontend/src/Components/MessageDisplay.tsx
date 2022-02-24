@@ -1,6 +1,7 @@
 import React from "react";
 
-const MessageDisplay = ({message}) => {
+
+const MessageDisplay = ({ message }: { message: Partial<MessageDisplayProps> }): JSX.Element => {
 
     return (
         <>{message === null ?
