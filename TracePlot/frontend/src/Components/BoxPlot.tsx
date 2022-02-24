@@ -1,27 +1,32 @@
 import React, { useState, useEffect} from "react";
 import Plot from 'react-plotly.js';
-const BoxPlot = (props) =>{
-    const [data, setData] = useState([])
+
+
+interface Props{
+    hops: Hop[]
+}
+const BoxPlot= ({hops}:Props):JSX.Element =>{
+    const [data, setData] = useState<Plotly.Data[]>([])
     
 
     useEffect(()=>{
-        props.hops.sort((a,b)=> a.hopNumber -b.hopNumber);
-        const newData = props.hops.reduce((result, hop) => {
+        hops.sort((a,b)=> a.hopNumber -b.hopNumber);
+        const newData = hops.reduce((result: Plotly.Data[], hop: Hop) => {
             // Filter out hops that did not respond
             if(hop.address !== "N/A"){
                 result.push({y:[hop.minimumReplyTime, hop.lowerQuartile, hop.medianReplyTime, hop.higherQuartile, hop.maximumReplyTime],
-                    x: "ms",
                     type:"box",
                     name:hop.address
                 })
-             }
-             return result
+            }
+
+            return result
         }, []);
         
         setData(newData)
-    },[props.hops])
+    },[hops])
 
-    let layout = { 
+    let layout: Partial<Plotly.Layout> = { 
         title: 'Traceroute',
         showlegend:false,
         plot_bgcolor:'rgba(0,0,0,0)',
@@ -30,13 +35,13 @@ const BoxPlot = (props) =>{
             type: 'category',
             title: 'Hops',
         },
-        yaxis:{
+        yaxis: {
             title: "Reply time (ms)"
         }
     }
     return ( 
         
-    <Plot class="invisible" data={data}
+    <Plot className="" data={data}
         
         layout={ layout }></Plot>              
         

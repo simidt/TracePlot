@@ -4,20 +4,21 @@ import React, { useState, useEffect } from "react";
 import TraceRouteCollection from "./Components/TraceRouteCollection";
 import MessageDisplay from "./Components/MessageDisplay";
 
-function App() {
-  const [hostname, setHostname] = useState("");
-  const [numberOfIterations, setNumberOfIterations] = useState("");
-  const [intervalSize, setIntervalSize] = useState("");
-  const [traceRoutes, setTraceRoutes] = useState([]);
-  const [message, setMessage] = useState(null);
+function App():JSX.Element {
+  const [hostname, setHostname] = useState<string>("");
+  const [numberOfIterations, setNumberOfIterations] = useState<string>("");
+  const [intervalSize, setIntervalSize] = useState<string>("");
+  const [traceRoutes, setTraceRoutes] = useState<TraceRouteCollection[]>([]);
+  const [message, setMessage] = useState<Partial<MessageDisplayProps>>({});
 
   useEffect(() => {
     TraceRouteService.getTraceRoutes().then((response) => {
+      console.log(response);
       setTraceRoutes(response);
     });
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e : React.FormEvent) => {
     e.preventDefault();
     const newObj = {
       hostname,
@@ -38,7 +39,7 @@ function App() {
       });
     }
     //Only show the confirmation for 5 seconds
-    setTimeout(() => setMessage(null), 5000);
+    setTimeout(() => setMessage({}), 5000);
   };
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -91,7 +92,7 @@ function App() {
       {traceRoutes.map((entry) => (
         <TraceRouteCollection
           key={entry["traceRouteCollectionID"]}
-          entry={entry}
+          trc={entry}
         ></TraceRouteCollection>
       ))}
     </div>

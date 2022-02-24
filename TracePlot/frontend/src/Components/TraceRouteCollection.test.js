@@ -121,7 +121,7 @@ const testData = {
 window.URL.createObjectURL = jest.fn();
 test("Toggle works", () => {
   const { container } = render(
-    <TraceRouteCollection entry={testData}></TraceRouteCollection>
+    <TraceRouteCollection trc={testData}></TraceRouteCollection>
   );
   const button = screen.getByText("View details");
   userEvent.click(button);
@@ -132,7 +132,7 @@ test("Toggle works", () => {
 
 test("Values are displayed correctly", () => {
   const { container } = render(
-    <TraceRouteCollection entry={testData}></TraceRouteCollection>
+    <TraceRouteCollection trc={testData}></TraceRouteCollection>
   );
   const hostname = screen.getByText(testData.targetHostname);
   const numberOfIterations = screen.getByText(testData.numberOfLoops);
