@@ -15,8 +15,6 @@ namespace TracePlot.Data
     public class TraceRouteDbContext : DbContext
     {
         public TraceRouteDbContext(DbContextOptions<TraceRouteDbContext> options) : base(options) { }
-        protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite("Data Source=traceroutes.db");
-
         public DbSet<TraceRouteCollection> TraceRouteCollections { get; set; }
         public DbSet<Hop> Hops { get; set; }
 

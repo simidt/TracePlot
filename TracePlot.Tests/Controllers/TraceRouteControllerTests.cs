@@ -53,7 +53,7 @@ namespace TracePlot.Tests.Controllers
             trc.NumberOfIterations = 5;
             trc.IntervalSize = 0;
 
-            var options = new DbContextOptionsBuilder<TraceRouteDbContext>().UseInMemoryDatabase("BloggingControllerTest").Options;
+            var options = new DbContextOptionsBuilder<TraceRouteDbContext>().UseInMemoryDatabase("TracerouteControllerTest").Options;
 
             ISchedulerFactory factory = new StdSchedulerFactory();
             using var context = new TraceRouteDbContext(options);

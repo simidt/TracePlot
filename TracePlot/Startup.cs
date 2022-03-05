@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,7 +25,20 @@ namespace TracePlot
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<TraceRouteDbContext>(options => options.UseSqlite("Data Source=traceroutes2.db"));
+            // services.AddDbContext<TraceRouteDbContext>(options => options.UseSqlite("Data Source=traceroutes2.db"));
+            switch (Configuration["DatabaseProvider"])
+            {
+                case "postgres":
+                    services.AddDbContext<TraceRouteDbContext>(options => options.UseNpgsql(Configuration["DatabaseConnection"]));
+                    break;
+                case "sqlite":
+                    services.AddDbContext<TraceRouteDbContext>(options => options.UseSqlite(Configuration["DatabaseConnection"]));
+                    break;
+                default:
+                    Console.WriteLine("No database provider specified. Defaulting to SQLite using the file \"traceroutes.db\" ");
+                    services.AddDbContext<TraceRouteDbContext>(options => options.UseSqlite("Data Source=traceroutes.db"));
+                    break;
+            }
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "frontend/build");
 
@@ -40,7 +54,7 @@ namespace TracePlot
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TraceRouteDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -52,7 +66,8 @@ namespace TracePlot
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            
+            context.Database.Migrate();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
