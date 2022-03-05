@@ -40,7 +40,7 @@ function App():JSX.Element {
       });
     }
     //Only show the confirmation for 5 seconds
-    setTimeout(() => setMessage({}), 5000);
+    setTimeout(() => setMessage({text:"", isError:false}), 5000);
   };
   return (
     <div className="min-h-screen bg-gray-100 p-8">
