@@ -9,7 +9,8 @@ function App():JSX.Element {
   const [numberOfIterations, setNumberOfIterations] = useState<string>("");
   const [intervalSize, setIntervalSize] = useState<string>("");
   const [traceRoutes, setTraceRoutes] = useState<TraceRouteCollection[]>([]);
-  const [message, setMessage] = useState<Partial<MessageDisplayProps>>({});
+  const [message, setMessage] = useState<MessageDisplayProps>({text: "",
+    isError: false});
 
   useEffect(() => {
     TraceRouteService.getTraceRoutes().then((response) => {
@@ -39,7 +40,7 @@ function App():JSX.Element {
       });
     }
     //Only show the confirmation for 5 seconds
-    setTimeout(() => setMessage({}), 5000);
+    setTimeout(() => setMessage({text:"", isError:false}), 5000);
   };
   return (
     <div className="min-h-screen bg-gray-100 p-8">
