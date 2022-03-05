@@ -9,7 +9,8 @@ function App():JSX.Element {
   const [numberOfIterations, setNumberOfIterations] = useState<string>("");
   const [intervalSize, setIntervalSize] = useState<string>("");
   const [traceRoutes, setTraceRoutes] = useState<TraceRouteCollection[]>([]);
-  const [message, setMessage] = useState<Partial<MessageDisplayProps>>({});
+  const [message, setMessage] = useState<MessageDisplayProps>({text: "",
+    isError: false});
 
   useEffect(() => {
     TraceRouteService.getTraceRoutes().then((response) => {
