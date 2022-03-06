@@ -17,7 +17,7 @@ namespace TracePlot
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+        Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((_, config) => config.AddJsonFile("appsettings.json").AddEnvironmentVariables())
+            .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
     }
 }
